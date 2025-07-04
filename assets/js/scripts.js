@@ -64,3 +64,19 @@ function drawMatrix() {
 }
 
 setInterval(drawMatrix, 50);
+// Contador de visitas (usando localStorage)
+function updateVisitorCounter() {
+    let count = localStorage.getItem('sigmaFX_visits');
+    
+    if (count === null) {
+        count = 1;
+    } else {
+        count = parseInt(count) + 1;
+    }
+
+    localStorage.setItem('sigmaFX_visits', count);
+    document.getElementById('visitorCounter').textContent = `Visitas: ${count}`;
+}
+
+// Llamar al contador
+updateVisitorCounter();
