@@ -64,19 +64,25 @@ function drawMatrix() {
 }
 
 setInterval(drawMatrix, 50);
-// Contador de visitas (usando localStorage)
-function updateVisitorCounter() {
-    let count = localStorage.getItem('sigmaFX_visits');
-    
-    if (count === null) {
-        count = 1;
-    } else {
-        count = parseInt(count) + 1;
+document.addEventListener("DOMContentLoaded", function () {
+    // Inicializar contador
+    const visitorKey = 'sigmaFX_visited';
+    const countKey = 'sigmaFX_totalVisits';
+
+    if (!localStorage.getItem(visitorKey)) {
+        // Es nueva visita
+        localStorage.setItem(visitorKey, 'true');
+
+        // Incrementar contador global
+        let totalVisits = parseInt(localStorage.getItem(countKey)) || 0;
+        totalVisits++;
+        localStorage.setItem(countKey, totalVisits.toString());
     }
 
-    localStorage.setItem('sigmaFX_visits', count);
-    document.getElementById('visitorCounter').textContent = `Visitas: ${count}`;
-}
-
-// Llamar al contador
-updateVisitorCounter();
+    // Mostrar el contador
+    const counterElement = document.getElementById('visitorCount');
+    if (counterElement) {
+        const currentCount = localStorage.getItem(countKey) || '0';
+        counterElement.textContent = currentCount;
+    }
+});
