@@ -1,5 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Menús desplegables independientes
+    // === Contador de Visitas Únicas por Dispositivo ===
+    const STORAGE_KEY = 'hasVisitedSigmaFX';
+    const COUNT_KEY = 'totalUniqueVisitors';
+
+    let visitorCount = parseInt(localStorage.getItem(COUNT_KEY)) || 0;
+
+    if (!localStorage.getItem(STORAGE_KEY)) {
+        // Primer acceso desde este dispositivo
+        visitorCount += 1;
+        localStorage.setItem(STORAGE_KEY, 'true');
+        localStorage.setItem(COUNT_KEY, visitorCount.toString());
+    }
+
+    // Mostrar el contador (opcional)
+    const counterElement = document.getElementById('visitor-count');
+    if (counterElement) {
+        counterElement.textContent = 'Visitas únicas: ' + visitorCount;
+    }
+
+    // === Menús desplegables independientes ===
     document.querySelectorAll('.dropdown-header').forEach(header => {
         header.addEventListener('click', () => {
             const content = header.nextElementSibling;
@@ -13,16 +32,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // WhatsApp
+    // === WhatsApp ===
     document.querySelectorAll('.service-item').forEach(item => {
         item.addEventListener('click', function () {
             const serviceName = encodeURIComponent(this.getAttribute('data-service'));
-            const whatsappURL = ` https://wa.me/63642087?text=Hola,%20me%20interesa%20el%20servicio:%20${serviceName}`;
+            const whatsappURL = `https://wa.me/63642087?text=Hola,%20me%20interesa%20el%20servicio:%20${serviceName}`;
             window.open(whatsappURL, '_blank');
         });
     });
 
-    // Toggle redes sociales
+    // === Toggle redes sociales ===
     const toggleBtn = document.getElementById('socialBtn');
     const icons = document.getElementById('socialIcons');
 
@@ -31,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// Animación Matrix
+// === Animación Matrix ===
 const canvas = document.getElementById('matrixCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -64,25 +83,3 @@ function drawMatrix() {
 }
 
 setInterval(drawMatrix, 50);
-document.addEventListener("DOMContentLoaded", function () {
-    // Inicializar contador
-    const visitorKey = 'sigmaFX_visited';
-    const countKey = 'sigmaFX_totalVisits';
-
-    if (!localStorage.getItem(visitorKey)) {
-        // Es nueva visita
-        localStorage.setItem(visitorKey, 'true');
-
-        // Incrementar contador global
-        let totalVisits = parseInt(localStorage.getItem(countKey)) || 0;
-        totalVisits++;
-        localStorage.setItem(countKey, totalVisits.toString());
-    }
-
-    // Mostrar el contador
-    const counterElement = document.getElementById('visitorCount');
-    if (counterElement) {
-        const currentCount = localStorage.getItem(countKey) || '0';
-        counterElement.textContent = currentCount;
-    }
-});
