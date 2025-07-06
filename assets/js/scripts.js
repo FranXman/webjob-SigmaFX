@@ -1,23 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // === Contador de Visitas Únicas por Dispositivo ===
-    const STORAGE_KEY = 'hasVisitedSigmaFX';
-    const COUNT_KEY = 'totalUniqueVisitors';
-
-    let visitorCount = parseInt(localStorage.getItem(COUNT_KEY)) || 0;
-
-    if (!localStorage.getItem(STORAGE_KEY)) {
-        // Primer acceso desde este dispositivo
-        visitorCount += 1;
-        localStorage.setItem(STORAGE_KEY, 'true');
-        localStorage.setItem(COUNT_KEY, visitorCount.toString());
-    }
-
-    // Mostrar el contador (opcional)
-    const counterElement = document.getElementById('visitor-count');
-    if (counterElement) {
-        counterElement.textContent = 'Visitas únicas: ' + visitorCount;
-    }
-
     // === Menús desplegables independientes ===
     document.querySelectorAll('.dropdown-header').forEach(header => {
         header.addEventListener('click', () => {
